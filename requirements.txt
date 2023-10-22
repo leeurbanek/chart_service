@@ -1,0 +1,14 @@
+# beautifulsoup4    # https://pypi.org/project/beautifulsoup4/
+# click             # https://pypi.org/project/click/
+# colorlog          # https://pypi.org/project/colorlog/
+# pandas              # https://pypi.org/project/pandas/
+# pandas-datareader  # https://pypi.org/project/pandas-datareader/
+# Pillow            # https://pypi.org/project/Pillow/
+# PyAutoGUI         # https://pypi.org/project/PyAutoGUI/
+# pytest            # https://pypi.org/project/pytest/
+python-dotenv     # https://pypi.org/project/python-dotenv/
+# requests          # https://pypi.org/project/requests/
+# requests-file     # https://pypi.org/project/requests-file/
+# requests-html     # https://pypi.org/project/requests-html/
+# selenium          # https://pypi.org/project/selenium/
+# tqdm              # https://pypi.org/project/tqdm/
