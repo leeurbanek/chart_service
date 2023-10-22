@@ -170,7 +170,7 @@ TODO
 *.code-workspace
 chromedriver
 x*.*
-.md
+beta.py
 
 #*.bak
 #*.log

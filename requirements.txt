@@ -1,6 +1,6 @@
 # beautifulsoup4    # https://pypi.org/project/beautifulsoup4/
 # click             # https://pypi.org/project/click/
-# colorlog          # https://pypi.org/project/colorlog/
+colorlog          # https://pypi.org/project/colorlog/
 # pandas              # https://pypi.org/project/pandas/
 # pandas-datareader  # https://pypi.org/project/pandas-datareader/
 # Pillow            # https://pypi.org/project/Pillow/
