@@ -1,11 +1,15 @@
 import logging.config
 import os.path
+from configparser import ConfigParser
+
 # from dotenv import load_dotenv
 
 
+base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 # Create default config file if if does not exist
 if not os.path.isfile('config.ini'):
-    from configparser import ConfigParser
+
     # config = ConfigParser()
     config_obj = ConfigParser(
         converters={'list': lambda x: [i.strip() for i in x.split(',')]}
@@ -21,12 +25,22 @@ if not os.path.isfile('config.ini'):
         fh.truncate()
         config_obj.write(fh)
 
-base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 config_file = os.path.join(base_dir, 'config.ini')
 
-# Create getlist() converter, used in cmd_config.py for ticker symbols
-# config_obj = ConfigParser(allow_no_value=True, converters={'list': lambda x: [i.strip() for i in x.split(',')]})
+# Create getlist() converter, used for reading ticker symbols
+config_obj = ConfigParser(allow_no_value=True, converters={'list': lambda x: [i.strip() for i in x.split(',')]})
 # config_obj = ConfigParser(converters={'list': lambda x: [i.strip() for i in x.split(',')]})
+
+config_obj.read(config_file)
+
+# Gather config files from other apps
+cfg_list = []
+for filename in os.listdir(base_dir):
+    if filename.startswith("app_") and filename.endswith(".ini"):
+        cfg_list.append(filename)
+# and add to config object
+for item in cfg_list:
+    config_obj.read(item)
 
 logger_conf = os.path.join(base_dir, 'logger.ini')
 logging.config.fileConfig(fname=logger_conf)
