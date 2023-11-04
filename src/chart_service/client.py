@@ -1,8 +1,9 @@
-# import logging
+import logging
 
 # from pathlib import Path
 # from configparser import ConfigParser
 
+from src import debug
 # from src import config_file
 
 # # Select which version of the webscraper to use
@@ -13,10 +14,12 @@
 # conf_obj = ConfigParser(converters={'list': lambda x: [i.strip() for i in x.split(',')]})
 # conf_obj.read(config_file)
 
-# logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 
 # def get_chart(ctx):
+# def get_chart(debug, symbol, period):
+def get_chart(**kwargs):
 #     """"""
 #     debug = ctx['debug']
 #     period = ctx['period']
@@ -26,6 +29,7 @@
 #     Path(f"{conf_obj.get('Default', 'work_dir')}/chart").mkdir(parents=True, exist_ok=True)
 
 #     if debug: logger.debug(f"get_chart(ctx={ctx})")
+    if debug: logger.debug(f"get_chart(debug={debug}, period={period}, symbol={symbol})")
 #     if not debug: print(f"Saving to '{conf_obj.get('Default', 'work_dir')}/chart'\nstarting download")
 
 #     # count = len(period) * len(symbol)

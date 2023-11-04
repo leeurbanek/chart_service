@@ -2,7 +2,7 @@ import os.path
 
 
 # Create default config file if if does not exist
-if not os.path.isfile('app_chartserv.ini'):
+if not os.path.isfile('cfg_chart.ini'):
     from configparser import ConfigParser
     config = ConfigParser()
 
@@ -12,6 +12,6 @@ if not os.path.isfile('app_chartserv.ini'):
     config.set('chart_service', 'ticker', 'EEM IWM LQD')
     
     # Write the new structure to the new file
-    with open(r"app_chartserv.ini", 'w') as fh:
+    with open(r"cfg_chart.ini", 'w') as fh:
         fh.truncate()
         config.write(fh)
