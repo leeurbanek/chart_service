@@ -7,6 +7,11 @@ from src import debug
 # from src.chart_service.scraper.my_requests import WebScraper
 # # from src.chart_service.scraper.my_selenium import WebScraper
 
+# if scraper == 'requests':
+#     from src.chart_service.scraper.my_requests import WebScraper
+# elif scraper == 'selenium':
+#     from src.chart_service.scraper.my_selenium import WebScraper
+
 logger = logging.getLogger(__name__)
 
 
@@ -35,18 +40,19 @@ def download(ctx):
 
     if debug: logger.debug(f"download(ctx={ctx.obj})")
 
-    if scraper == 'request':
+    if scraper == 'requests':
         from src.chart_service.scraper.my_requests import WebScraper
     elif scraper == 'selenium':
         from src.chart_service.scraper.my_selenium import WebScraper
  
     # [WebScraper(p, s.strip(',')) for p in period for s in symbol]
 
-    start = WebScraper(period=period, symbol=symbol)
-    try:
-        [start.webscraper(p, s.strip(',')) for p in period for s in symbol]
-    except:
-        pass
+    print(f"WebScraper(): {WebScraper}")
+    # start = WebScraper(period=period, symbol=symbol)
+    # try:
+    #     [start.webscraper(p, s.strip(',')) for p in period for s in symbol]
+    # except:
+    #     pass
 
     # start = WebScraper(debug, period, symbol)
     # try:
