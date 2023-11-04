@@ -53,7 +53,7 @@ logging.getLogger('unittest').setLevel(logging.WARNING)
 if config_dict['default']['debug'].lower() in [1, 'true', 't', 'yes', 'y'] :
     debug = True
     logger = logging.getLogger(__name__)
-    logger.debug(f"config: {config_dict}")
+    logger.debug(f"config_dict = {config_dict}")
 
 
 # try:

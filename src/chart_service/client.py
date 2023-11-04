@@ -1,49 +1,57 @@
 import logging
-
-# from pathlib import Path
-# from configparser import ConfigParser
+from pathlib import Path
 
 from src import debug
-# from src import config_file
 
 # # Select which version of the webscraper to use
 # from src.chart_service.scraper.my_requests import WebScraper
 # # from src.chart_service.scraper.my_selenium import WebScraper
 
-
-# conf_obj = ConfigParser(converters={'list': lambda x: [i.strip() for i in x.split(',')]})
-# conf_obj.read(config_file)
-
 logger = logging.getLogger(__name__)
 
 
-# def get_chart(ctx):
-# def get_chart(debug, symbol, period):
-def get_chart(**kwargs):
-#     """"""
-#     debug = ctx['debug']
-#     period = ctx['period']
-#     symbol = ctx['symbol']
+def get_chart(ctx):
+    """"""
+    if debug: logger.debug(f"get_chart(ctx={ctx.obj})")
 
-#     # check 'chart' folder exists in users 'work_dir', if not create 'chart' folder
-#     Path(f"{conf_obj.get('Default', 'work_dir')}/chart").mkdir(parents=True, exist_ok=True)
+    # check 'chart' folder exists in users 'temp_dir', if not create 'chart' folder
+    Path(f"{ctx.obj['default']['temp_dir']}/chart").mkdir(parents=True, exist_ok=True)
 
-#     if debug: logger.debug(f"get_chart(ctx={ctx})")
-    if debug: logger.debug(f"get_chart(debug={debug}, period={period}, symbol={symbol})")
-#     if not debug: print(f"Saving to '{conf_obj.get('Default', 'work_dir')}/chart'\nstarting download")
+    if not debug: print(f"Saving to '{ctx.obj['default']['temp_dir']}/chart'\nstarting download")
 
-#     # count = len(period) * len(symbol)
-#     [download(debug, p, s.strip(',')) for p in period for s in symbol]
-#     if not debug: print('cleaning up... ', end='')
-#     if not debug: print('\b finished.')
+    # [download(p, s.strip(',')) for p in ctx.obj['chart_service']['period'] for s in ctx.obj['chart_service']['ticker']]
+    download(ctx=ctx)
+
+    if not debug: print('cleaning up... ', end='')
+    if not debug: print('\b finished.')
 
 
-# def download(debug, period, symbol):
-#     """"""
-#     if debug: logger.debug(f"download(period={period} {type(period)}, symbol={symbol} {type(symbol)})")
+# def download(period, symbol):
+def download(ctx):
+    """"""
+    scraper = ctx.obj['chart_service']['scraper']
+    period = ctx.obj['chart_service']['period']
+    symbol = ctx.obj['chart_service']['ticker']
 
-#     start = WebScraper(debug, period, symbol)
-#     try:
-#         start.webscraper()
-#     except:
-#         pass
+    if debug: logger.debug(f"download(ctx={ctx.obj})")
+
+    if scraper == 'request':
+        from src.chart_service.scraper.my_requests import WebScraper
+    elif scraper == 'selenium':
+        from src.chart_service.scraper.my_selenium import WebScraper
+ 
+    # [WebScraper(p, s.strip(',')) for p in period for s in symbol]
+
+    start = WebScraper(period=period, symbol=symbol)
+    try:
+        [start.webscraper(p, s.strip(',')) for p in period for s in symbol]
+    except:
+        pass
+
+    # start = WebScraper(debug, period, symbol)
+    # try:
+    #     start.webscraper()
+    # except:
+    #     pass
+
+    # [download(p, s.strip(',')) for p in period for s in symbol]

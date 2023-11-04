@@ -8,8 +8,9 @@ from bs4 import BeautifulSoup
 from PIL import Image
 from requests_html import HTMLSession
 
+from src import debug
 from src import config_file
-from src.ctx_mgr import SpinnerManager
+from src.utils import SpinnerManager
 
 
 conf_obj = ConfigParser()
@@ -25,7 +26,7 @@ CHART_DIR = f"{conf_obj['Default']['work_dir']}/chart"
 
 class WebScraper:
     """"""
-    def __init__(self, debug, period, symbol) -> None:
+    def __init__(self, period, symbol) -> None:
         self.session = HTMLSession()
         self.debug = debug
         self.period = period
