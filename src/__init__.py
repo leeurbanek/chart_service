@@ -1,3 +1,4 @@
+"""src.__init__.py"""
 import logging, logging.config
 import os.path
 from configparser import ConfigParser
@@ -55,8 +56,6 @@ if config_dict['default']['debug'].lower() in [1, 'true', 't', 'yes', 'y'] :
     debug = True
     logger = logging.getLogger(__name__)
     logger.debug(f"config_dict = {config_dict}")
-
-# scraper = config_dict['chart_service']['scraper']
 
 # try:
 #     load_dotenv()

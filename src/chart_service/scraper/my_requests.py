@@ -1,7 +1,6 @@
 import io
 import logging
 import os
-from configparser import ConfigParser
 from urllib.parse import urljoin
 
 from bs4 import BeautifulSoup
@@ -9,29 +8,23 @@ from PIL import Image
 from requests_html import HTMLSession
 
 from src import debug
-from src import config_file
 from src.utils import SpinnerManager
 
-
-conf_obj = ConfigParser()
-conf_obj.read(config_file)
 
 logging.getLogger('PIL').setLevel(logging.WARNING)
 logging.getLogger('urllib3').setLevel(logging.WARNING)
 logger = logging.getLogger(__name__)
 
-# BASE_URL = conf_obj['Scraper']['base_url']
-# CHART_DIR = f"{conf_obj['Default']['work_dir']}/chart"
-
 
 class WebScraper:
     """"""
-    def __init__(self, period, symbol) -> None:
-        self.session = HTMLSession()
+    def __init__(self, ctx, period, symbol) -> None:
+        self.chart_dir = f"ctx.obj['default']['temp_dir']/chart"
         self.debug = debug
         self.period = period
+        self.session = HTMLSession()
         self.symbol = symbol
-        # self.url = BASE_URL+symbol
+        self.url = ctx.obj['chart_service']['base_url']+symbol
 
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}(debug={self.debug}, symbol={self.symbol}, period={self.period})"
@@ -125,7 +118,7 @@ class WebScraper:
 
         image_file = io.BytesIO(src_content)
         image = Image.open(image_file).convert('RGB')
-        image.save(os.path.join(CHART_DIR, f'{self.symbol}_{self.period.lower()}.png'), 'PNG', quality=80)
+        image.save(os.path.join(self.chart_dir, f'{self.symbol}_{self.period.lower()}.png'), 'PNG', quality=80)
 
     def _submit_form(self, form_details=None):
         """"""
