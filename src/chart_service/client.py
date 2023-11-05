@@ -47,12 +47,12 @@ def download(ctx):
  
     # [WebScraper(p, s.strip(',')) for p in period for s in symbol]
 
-    print(f"WebScraper(): {WebScraper}")
-    # start = WebScraper(period=period, symbol=symbol)
-    # try:
-    #     [start.webscraper(p, s.strip(',')) for p in period for s in symbol]
-    # except:
-    #     pass
+    start = WebScraper(period=period, symbol=symbol)
+    try:
+        # [start.webscraper(p, s.strip(',')) for p in period for s in symbol]
+        [start.webscraper() for p in period for s in symbol]
+    except:
+        pass
 
     # start = WebScraper(debug, period, symbol)
     # try:

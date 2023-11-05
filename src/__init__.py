@@ -50,6 +50,7 @@ logger_conf = os.path.join(base_dir, 'logger.ini')
 logging.config.fileConfig(fname=logger_conf)
 logging.getLogger('unittest').setLevel(logging.WARNING)
 
+debug = False
 if config_dict['default']['debug'].lower() in [1, 'true', 't', 'yes', 'y'] :
     debug = True
     logger = logging.getLogger(__name__)

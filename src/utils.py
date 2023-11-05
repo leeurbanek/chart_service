@@ -9,6 +9,7 @@ from configparser import ConfigParser
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 
+from src import config_dict
 from src import config_file
 
 
@@ -18,8 +19,8 @@ conf_obj.read(config_file)
 logging.getLogger('selenium').setLevel(logging.WARNING)
 logger = logging.getLogger(__name__)
 
-ADBLOCK = conf_obj['Scraper']['adblock']
-DRIVER = conf_obj['Scraper']['driver']
+ADBLOCK = config_dict['chart_service']['adblock']
+DRIVER = config_dict['chart_service']['driver']
 
 
 class DatabaseConnectionManager:
