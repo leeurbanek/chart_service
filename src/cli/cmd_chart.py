@@ -44,12 +44,12 @@ def cli(ctx, opt_trans, symbol):
         ctx.obj['chart_service']['period'] = period_dict[opt_trans]
 
         if symbol:  # use symbols from command line input
-            ctx.obj['chart_service']['ticker'] = [
+            ctx.obj['chart_service']['symbol'] = [
                 s.upper() for s in list(symbol)
             ]
         else:  # use symbols from config.ini
             import re
-            ctx.obj['chart_service']['ticker'] = [
+            ctx.obj['chart_service']['symbol'] = [
                 s.upper() for s in re.findall(r'[^,;\s]+', ctx.obj['chart_service']['ticker'])
             ]
 

@@ -10,7 +10,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 
 from src import config_file
-from src.ctx_mgr import SpinnerManager, WebDriverManager
+from src.utils import SpinnerManager, WebDriverManager
 
 
 conf_obj = ConfigParser()

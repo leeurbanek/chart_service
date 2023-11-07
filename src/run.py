@@ -1,6 +1,5 @@
 import logging
 import os
-# from configparser import ConfigParser
 
 import click
 
@@ -35,7 +34,6 @@ class MyMultiCommand(click.MultiCommand):
 @click.version_option(package_name='chartserv-cli')
 
 @click.pass_context
-# def main_cli(ctx, debug):
 def main_cli(ctx):
     """ChartServ_CLI: stockmarket CHART SERVice Command Line Interface"""
     ctx.obj = config_dict

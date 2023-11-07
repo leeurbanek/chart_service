@@ -19,7 +19,8 @@ logger = logging.getLogger(__name__)
 class WebScraper:
     """"""
     def __init__(self, ctx, period, symbol) -> None:
-        self.chart_dir = f"ctx.obj['default']['temp_dir']/chart"
+        self.chart_dir = f"{ctx.obj['default']['temp_dir']}/chart"
+        self.ctx = ctx
         self.debug = debug
         self.period = period
         self.session = HTMLSession()
@@ -27,11 +28,11 @@ class WebScraper:
         self.url = ctx.obj['chart_service']['base_url']+symbol
 
     def __repr__(self) -> str:
-        return f"{self.__class__.__name__}(debug={self.debug}, symbol={self.symbol}, period={self.period})"
+        return f"{self.__class__.__name__}(ctx={self.ctx.obj}, period={self.period}, symbol={self.symbol})"
 
     def webscraper(self):
         """"""
-        if self.debug: logger.debug(f'webscraper({self.symbol}, {self.period})')
+        if self.debug: logger.debug(f'webscraper(period={self.period}, symbol={self.symbol})')
         if not self.debug: print(f'  fetching chart: {self.symbol}_{self.period.lower()}.png... ', end=' ')
         with SpinnerManager():
             form = self._get_all_forms()[2]
@@ -46,7 +47,8 @@ class WebScraper:
         res = self.session.get(self.url)
         # res.html.render()  # for javascript driven website
         soup = BeautifulSoup(res.text, "html.parser")
-        return soup.find_all("form")
+        forms = soup.find_all("form")
+        return forms
 
     def _get_form_details(self, form=None):
         """Returns action, method, and form controls (inputs, etc)"""
@@ -118,6 +120,7 @@ class WebScraper:
 
         image_file = io.BytesIO(src_content)
         image = Image.open(image_file).convert('RGB')
+        if self.debug: logger.debug(f"saving img to: {os.path.join(self.chart_dir, f'{self.symbol}.png')}")
         image.save(os.path.join(self.chart_dir, f'{self.symbol}_{self.period.lower()}.png'), 'PNG', quality=80)
 
     def _submit_form(self, form_details=None):

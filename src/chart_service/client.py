@@ -18,9 +18,7 @@ def get_chart(ctx):
 
     if not debug: print(f"Saving to '{ctx.obj['default']['temp_dir']}/chart'\nstarting download")
 
-    [download(ctx, p, s.strip(',')) 
-     for p in ctx.obj['chart_service']['period'] 
-     for s in ctx.obj['chart_service']['ticker']]
+    [download(ctx, p, s.strip(',')) for p in ctx.obj['chart_service']['period'] for s in ctx.obj['chart_service']['symbol']]
 
     if not debug: print('cleaning up... ', end='')
     if not debug: print('\b finished.')
@@ -36,6 +34,8 @@ def download(ctx, period, symbol):
         from src.chart_service.scraper.my_selenium import WebScraper
  
     start = WebScraper(ctx, period, symbol)
+    if debug: logger.debug(f"WebScraper(): {start}")
+
     try:
         start.webscraper()
     except:
