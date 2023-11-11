@@ -40,6 +40,7 @@ for filename in os.listdir(base_dir):
 for item in cfg_list:
     config_parser.read(item)
 
+# Put config section/option data into a dictionary
 config_dict = dict(
     (section, dict(
         (option, config_parser.get(section, option)) 
@@ -52,6 +53,7 @@ logger_conf = os.path.join(base_dir, 'logger.ini')
 logging.config.fileConfig(fname=logger_conf)
 logging.getLogger('unittest').setLevel(logging.WARNING)
 
+# Set debug
 debug = False
 if config_dict['default']['debug'].lower() in [1, 'true', 't', 'yes', 'y'] :
     debug = True

@@ -4,24 +4,19 @@ import os
 import sys
 import threading
 import time
-# from configparser import ConfigParser
 
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 
-# from src import config_dict
-# from src import config_file
+from src import config_dict
 
-
-# conf_obj = ConfigParser()
-# conf_obj.read(config_file)
 
 logging.getLogger('selenium').setLevel(logging.WARNING)
 logger = logging.getLogger(__name__)
 
-# ADBLOCK = config_dict['chart_service']['adblock']
-# DRIVER = config_dict['chart_service']['driver']
-
+adblock = config_dict['chart_service']['adblock']
+debug = config_dict['default']['debug']
+driver = config_dict['chart_service']['driver']
 
 # class DatabaseConnectionManager:
 #     """Context manager for Sqlite3 databases.
@@ -69,6 +64,8 @@ logger = logging.getLogger(__name__)
 
 class SpinnerManager:
     """Manage a simple spinner object"""
+    if debug: logger.debug("SpinnerManager object")
+
     busy = False
     delay = 0.2
 
@@ -99,20 +96,25 @@ class SpinnerManager:
         if exception is not None:
             return False
 
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}(delay={self.delay})"
+
 
 class WebDriverManager:
     """Manage Selenium web driver"""
+    if debug: logger.debug("WebDriverManager object")
+
     def __init__(self, debug: bool) -> None:
         self.debug = debug
 
     def __enter__(self):
         chrome_opts = webdriver.ChromeOptions()
         chrome_opts.headless = True  # don't display browser window
-        s = Service(DRIVER)
+        s = Service(driver)
         self.driver = webdriver.Chrome(service=s, options=chrome_opts)
         # Install ad blocker if used
-        if os.path.exists(ADBLOCK):
-            self.driver.install_addon(ADBLOCK)
+        if os.path.exists(adblock):
+            self.driver.install_addon(adblock)
             # pyautogui.PAUSE = 2.5
             # pyautogui.click()  # position browser window
             # pyautogui.hotkey('ctrl', 'w')  # close ADBLOCK page
@@ -123,6 +125,9 @@ class WebDriverManager:
     def __exit__(self, exc_type, exc_value, exc_traceback):
         self.driver.quit()
         if self.debug: logger.debug('WebDriverManager.__exit__()')
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}(debug={self.debug})"
 
 
 if __name__ == '__main__':

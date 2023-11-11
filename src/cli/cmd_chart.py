@@ -50,7 +50,7 @@ def cli(ctx, opt_trans, symbol):
         else:  # use symbols from config.ini
             import re
             ctx.obj['chart_service']['symbol'] = [
-                s.upper() for s in re.findall(r'[^,;\s]+', ctx.obj['chart_service']['ticker'])
+                s.upper() for s in re.findall(r'[^,;\s]+', ctx.obj['chart_service']['symbol'])
             ]
 
         client.get_chart(ctx)

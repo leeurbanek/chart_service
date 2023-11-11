@@ -25,7 +25,7 @@ class WebScraper:
         self.period = period
         self.session = HTMLSession()
         self.symbol = symbol
-        self.url = ctx.obj['chart_service']['base_url']+symbol
+        self.url = ctx.obj['chart_service']['base_url']+self.symbol
 
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}(ctx={self.ctx.obj}, period={self.period}, symbol={self.symbol})"
