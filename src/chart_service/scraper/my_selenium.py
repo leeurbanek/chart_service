@@ -33,7 +33,7 @@ class WebScraper:
 
     def webscraper(self):
         """"""
-        if self.debug: logger.debug(f'webscraper({self.period}, {self.symbol})')
+        if self.debug: logger.debug(f'webscraper({self.period}, {self.symbol})\n')
         with WebDriverManager(debug=self.debug) as driver:
             if self.debug: logger.debug(f"WebDriverManager()={WebDriverManager}")
             if not self.debug: print(f'  fetching chart: {self.symbol}_{self.period.lower()}.png... ', end=' ')

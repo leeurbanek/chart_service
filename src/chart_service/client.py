@@ -26,7 +26,7 @@ def get_chart(ctx):
 
 def download(ctx, period, symbol):
     """"""
-    if debug: logger.debug(f"download(ctx={ctx.obj}, period={period}, symbol={symbol})")
+    if debug: logger.debug(f"download(ctx={ctx}, period={period}, symbol={symbol})")
 
     if ctx.obj['chart_service']['scraper'] == 'requests':
         from src.chart_service.scraper.my_requests import WebScraper
@@ -34,9 +34,10 @@ def download(ctx, period, symbol):
         from src.chart_service.scraper.my_selenium import WebScraper
  
     start = WebScraper(ctx, period, symbol)
-    if debug: logger.debug(f"WebScraper(): {start}")
 
     try:
         start.webscraper()
+        if debug: logger.debug(f"{start}")
     except:
+        if debug: logger.debug(f"{Exception.mro}")
         pass
