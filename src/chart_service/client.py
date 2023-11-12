@@ -38,6 +38,6 @@ def download(ctx, period, symbol):
     try:
         start.webscraper()
         if debug: logger.debug(f"{start}")
-    except:
-        if debug: logger.debug(f"{Exception.mro}")
+    except Exception as e:
+        if debug: logger.debug(f"start.webscraper(): {e}")
         pass

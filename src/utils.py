@@ -5,7 +5,9 @@ import threading
 import time
 
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
+# from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.service import Service as ChromeService
+from webdriver_manager.chrome import ChromeDriverManager
 
 from src import config_dict
 
@@ -59,14 +61,16 @@ class SpinnerManager:
 
 class WebDriverManager:
     """Manage Selenium web driver"""
-    def __init__(self) -> None:
+    def __init__(self, debug) -> None:
         self.debug = debug
 
     def __enter__(self):
         chrome_opts = webdriver.ChromeOptions()
         chrome_opts.headless = True  # don't display browser window
-        s = Service(driver)
-        self.driver = webdriver.Chrome(service=s, options=chrome_opts)
+        # s = Service(driver)
+        # self.driver = webdriver.Chrome(service=s, options=chrome_opts)
+        self.driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+
         # Install ad blocker if used
         if os.path.exists(adblock):
             self.driver.install_addon(adblock)
@@ -88,3 +92,10 @@ class WebDriverManager:
 if __name__ == '__main__':
     with SpinnerManager():
         time.sleep(2)  # some long-running operation
+
+# # selenium 4
+# from selenium import webdriver
+# from selenium.webdriver.chrome.service import Service as ChromeService
+# from webdriver_manager.chrome import ChromeDriverManager
+
+# driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))

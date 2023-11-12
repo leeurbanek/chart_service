@@ -12,3 +12,4 @@ requests-file     # https://pypi.org/project/requests-file/
 requests-html     # https://pypi.org/project/requests-html/
 selenium          # https://pypi.org/project/selenium/
 # tqdm              # https://pypi.org/project/tqdm/
+webdriver-manager # https://pypi.org/project/webdriver-manager/

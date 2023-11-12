@@ -33,9 +33,9 @@ class WebScraper:
 
     def webscraper(self):
         """"""
-        if self.debug: logger.debug(f'webscraper({self.period}, {self.symbol})\n')
+        if self.debug: logger.debug(f'webscraper({self.period}, {self.symbol})')
         with WebDriverManager(debug=self.debug) as driver:
-            if self.debug: logger.debug(f"WebDriverManager()={WebDriverManager}")
+            if self.debug: logger.debug(f"WebDriverManager()={driver}")
             if not self.debug: print(f'  fetching chart: {self.symbol}_{self.period.lower()}.png... ', end=' ')
             with SpinnerManager():
                 if self.debug: logger.debug(f"SpinnerManager()={SpinnerManager}")
