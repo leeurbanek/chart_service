@@ -17,9 +17,6 @@ config_parser = ConfigParser(
 
 # Create default config file if if does not exist
 if not os.path.isfile(config_file):
-    # config_parser = ConfigParser(
-    #     converters={'list': lambda x: [i.strip() for i in x.split(',')]}
-    #     )
     # Add the structure to the file we will create
     config_parser.add_section('default')
     config_parser.set('default', 'debug', 'false')
@@ -56,6 +53,10 @@ logging.getLogger('unittest').setLevel(logging.WARNING)
 # Set debug
 debug = False
 if config_dict['default']['debug'].lower() in [1, 'true', 't', 'yes', 'y'] :
+    config_dict['default']['debug'] = 'True'
     debug = True
-    logger = logging.getLogger(__name__)
-    logger.debug(f"config_dict = {config_dict}")
+else:
+    config_dict['default']['debug'] = 'False'
+
+logger = logging.getLogger(__name__)
+if debug: logger.debug(f"config_dict = {config_dict}")

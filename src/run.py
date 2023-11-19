@@ -3,7 +3,7 @@ import os
 
 import click
 
-from src import config_dict, debug
+from src import config_dict
 
 
 logger = logging.getLogger(__name__)
@@ -27,6 +27,7 @@ class MyMultiCommand(click.MultiCommand):
             return
         return mod.cli
 
+
 @click.command(cls=MyMultiCommand)
 # @click.option(
 #     '--debug/--no-debug', default=False, help='Enable/disable debug logging.'
@@ -37,4 +38,5 @@ class MyMultiCommand(click.MultiCommand):
 def main_cli(ctx):
     """ChartServ_CLI: stockmarket CHART SERVice Command Line Interface"""
     ctx.obj = config_dict
-    if debug: logger.debug(f"main_cli(ctx={ctx.obj})")
+    if ctx.obj['default']['debug'] == 'True':
+        logger.debug(f"main_cli(ctx={ctx.obj})")

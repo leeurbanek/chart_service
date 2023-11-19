@@ -7,7 +7,6 @@ from bs4 import BeautifulSoup
 from PIL import Image
 from requests_html import HTMLSession
 
-from src import debug
 from src.utils import SpinnerManager
 
 
@@ -20,15 +19,15 @@ class WebScraper:
     """"""
     def __init__(self, ctx, period, symbol) -> None:
         self.chart_dir = f"{ctx.obj['default']['temp_dir']}/chart"
-        self.ctx = ctx
-        self.debug = debug
+        self.ctx = ctx.obj
+        self.debug = ctx.obj['default']['debug'] == 'True'
         self.period = period
         self.session = HTMLSession()
         self.symbol = symbol
         self.url = ctx.obj['chart_service']['base_url']+self.symbol
 
     def __repr__(self) -> str:
-        return f"{self.__class__.__name__}(ctx={self.ctx.obj}, period={self.period}, symbol={self.symbol})"
+        return f"{self.__class__.__name__}(ctx={self.ctx}, period={self.period}, symbol={self.symbol})"
 
     def webscraper(self):
         """"""

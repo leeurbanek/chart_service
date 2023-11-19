@@ -5,7 +5,6 @@ import threading
 import time
 
 from selenium import webdriver
-# from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 
@@ -16,7 +15,7 @@ logging.getLogger('selenium').setLevel(logging.WARNING)
 logger = logging.getLogger(__name__)
 
 adblock = config_dict['chart_service']['adblock']
-debug = config_dict['default']['debug']
+debug = config_dict['default']['debug'] == 'True'
 driver = config_dict['chart_service']['driver']
 
 
@@ -37,11 +36,13 @@ class SpinnerManager:
 
     def spinner_task(self):
         while self.busy:
-            sys.stdout.write(next(self.spinner_generator))
-            sys.stdout.flush()
+            if not self.debug: 
+                sys.stdout.write(next(self.spinner_generator))
+                sys.stdout.flush()
             time.sleep(self.delay)
-            sys.stdout.write('\b')
-            sys.stdout.flush()
+            if not self.debug:
+                sys.stdout.write('\b')
+                sys.stdout.flush()
 
     def __enter__(self):
         self.busy = True
@@ -92,10 +93,3 @@ class WebDriverManager:
 if __name__ == '__main__':
     with SpinnerManager():
         time.sleep(2)  # some long-running operation
-
-# # selenium 4
-# from selenium import webdriver
-# from selenium.webdriver.chrome.service import Service as ChromeService
-# from webdriver_manager.chrome import ChromeDriverManager
-
-# driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))

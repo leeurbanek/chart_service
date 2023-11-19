@@ -8,7 +8,6 @@ from PIL import Image
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 
-from src import debug
 from src.utils import SpinnerManager, WebDriverManager
 
 
@@ -23,7 +22,7 @@ class WebScraper:
     def __init__(self, ctx, period, symbol):
         self.chart_dir = f"{ctx.obj['default']['temp_dir']}/chart"
         self.ctx = ctx
-        self.debug = debug
+        self.debug = ctx.obj['default']['debug'] == 'True'
         self.period = period
         self.symbol = symbol
         self.url = ctx.obj['chart_service']['base_url']
