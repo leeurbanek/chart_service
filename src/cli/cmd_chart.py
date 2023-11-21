@@ -2,7 +2,7 @@ import logging
 
 import click
 
-from src import debug
+# from src import debug
 from src.chart_service import client
 
 
@@ -33,7 +33,9 @@ DESCRIPTION
 @click.pass_context
 def cli(ctx, opt_trans, symbol):
     """Run chart command"""
-    if debug: logger.debug(f"cli(opt_trans={opt_trans}, symbol={symbol})")
+    if ctx.obj['default']['debug'] == 'True':
+        logger.debug(f"cli(opt_trans={opt_trans}, symbol={symbol})")
+
     if opt_trans:
         # option flag_value to dictionary of lists
         period_dict = {
@@ -47,7 +49,7 @@ def cli(ctx, opt_trans, symbol):
             ctx.obj['chart_service']['symbol'] = [
                 s.upper() for s in list(symbol)
             ]
-        else:  # use symbols from config.ini
+        else:  # use symbols from config file
             import re
             ctx.obj['chart_service']['symbol'] = [
                 s.upper() for s in re.findall(r'[^,;\s]+', ctx.obj['chart_service']['symbol'])
