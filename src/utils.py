@@ -11,12 +11,12 @@ from webdriver_manager.chrome import ChromeDriverManager
 from src import config_dict
 
 
-logging.getLogger('selenium').setLevel(logging.WARNING)
-logger = logging.getLogger(__name__)
-
 adblock = config_dict['chart_service']['adblock']
 debug = config_dict['default']['debug'] == 'True'
 driver = config_dict['chart_service']['driver']
+
+logging.getLogger('selenium').setLevel(logging.WARNING)
+logger = logging.getLogger(__name__)
 
 
 class SpinnerManager:
