@@ -29,11 +29,15 @@ def download(ctx, period, symbol):
     if debug: logger.debug(f"download(ctx={ctx}, period={period}, symbol={symbol})")
 
     if ctx.obj['chart_service']['scraper'] == 'requests':
-        from src.chart_service.scraper.my_requests import WebScraper
+        # from src.chart_service.scraper.my_requests import WebScraper
+        from src.chart_service.scraper import MyRequests
+        start = MyRequests(ctx, period, symbol)
     elif ctx.obj['chart_service']['scraper'] == 'selenium':
-        from src.chart_service.scraper.my_selenium import WebScraper
- 
-    start = WebScraper(ctx, period, symbol)
+        # from src.chart_service.scraper.my_selenium import WebScraper
+        from src.chart_service.scraper import MySelenium
+        start = MySelenium(ctx, period, symbol)
+
+    # start = WebScraper(ctx, period, symbol)
 
     try:
         if debug: logger.debug(f"{start}")
